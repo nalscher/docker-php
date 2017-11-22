@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y \
         libmcrypt-dev \
         libpng-dev \
         libicu-dev \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt pdo_mysql intl  \
+    && docker-php-ext-install -j$(nproc) iconv mcrypt pdo_mysql intl zip \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
     && echo "memory_limit = -1" > /usr/local/etc/php/conf.d/zz-mem.ini
