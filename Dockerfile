@@ -15,7 +15,7 @@ RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/community/ >> /etc/apk/reposi
 RUN apk update && \
     apk add --no-cache shadow icu-dev g++ autoconf openssl-dev \
                        make pcre pcre-dev bash msttcorefonts-installer \
-                       gnumeric libssh2-dev openssh-client bzip2-dev ffmpeg && \
+                       gnumeric libssh2-dev openssh-client bzip2-dev ffmpeg git && \
     docker-php-ext-configure intl && \
     docker-php-ext-configure opcache && \
     docker-php-ext-configure zip && \
@@ -28,7 +28,7 @@ RUN apk update && \
     pecl install mongodb-1.2.11 && \
     printf "\n" | pecl install apcu-4.0.11 && \
     printf "\n" | pecl install ssh2
-
+    
 RUN echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/zz-pc-mongodb.ini && \
     echo "extension=apcu.so" > /usr/local/etc/php/conf.d/zz-pc-apcu.ini && \
     echo "extension=ssh2.so" > /usr/local/etc/php/conf.d/zz-pc-ssh2.ini && \
@@ -59,6 +59,13 @@ RUN mkdir /var/log/php && cd /var/log/php && ln -s  /dev/stderr error.log
 RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing gnu-libiconv
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php-fpm
+
+RUN cd /usr/bin && \
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
+    php composer-setup.php && \
+    php -r "unlink('composer-setup.php');" && \
+    ln -s composer.phar composer
 
 RUN usermod -u ${PUID} www-data
 RUN groupmod -g ${GUID} www-data
