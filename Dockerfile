@@ -65,7 +65,7 @@ RUN apk add --update --no-cache autoconf g++ imagemagick-dev libtool make pcre-d
 ENV PHPMONGODB_VERSION 1.4.1
 
 RUN apk add --update --no-cache autoconf g++ make pcre-dev \
-    pecl install mongodb-$PHPMONGODB_VERSION \
+    && pecl install mongodb-$PHPMONGODB_VERSION \
     && docker-php-ext-enable mongodb \
     && apk del autoconf g++ make pcre-dev
 
