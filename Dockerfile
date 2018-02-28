@@ -9,6 +9,7 @@ ENV APP_MEMORY_LIMIT 256M
 ENV APP_MAX_EXECUTION_TIME 120
 ENV APP_MAX_CHILDREN 20
 ENV APP_PROCESS_IDLE_TIMEOUT 10s
+ENV APP_ENV development
 
 RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories
 
@@ -25,12 +26,10 @@ RUN apk update && \
     update-ms-fonts && \
     fc-cache -f && \
     pecl install mongodb-1.2.11 && \
-    printf "\n" | pecl install apcu-4.0.11 && \
     printf "\n" | pecl install ssh2 && \
     printf "\n" | pecl install imagick
     
 RUN echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/zz-mongodb.ini && \
-    echo "extension=apcu.so" > /usr/local/etc/php/conf.d/zz-apcu.ini && \
     echo "extension=ssh2.so" > /usr/local/etc/php/conf.d/zz-ssh2.ini && \
     echo "extension=imagick.so" > /usr/local/etc/php/conf.d/zz-imagick.ini && \
     
