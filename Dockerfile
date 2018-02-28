@@ -67,5 +67,5 @@ RUN cd /usr/bin && \
     php -r "unlink('composer-setup.php');" && \
     ln -s composer.phar composer
 
-RUN usermod -u ${PUID} www-data
-RUN groupmod -g ${GUID} www-data
+RUN usermod -u ${PUID} www-data && \
+	groupmod -g ${GUID} www-data
