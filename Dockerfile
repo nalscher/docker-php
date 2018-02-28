@@ -29,24 +29,25 @@ RUN apk update && \
     printf "\n" | pecl install ssh2 && \
     printf "\n" | pecl install imagick
     
-RUN echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/zz-pc-mongodb.ini && \
-    echo "extension=apcu.so" > /usr/local/etc/php/conf.d/zz-pc-apcu.ini && \
-    echo "extension=ssh2.so" > /usr/local/etc/php/conf.d/zz-pc-ssh2.ini && \
+RUN echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/zz-mongodb.ini && \
+    echo "extension=apcu.so" > /usr/local/etc/php/conf.d/zz-apcu.ini && \
+    echo "extension=ssh2.so" > /usr/local/etc/php/conf.d/zz-ssh2.ini && \
+    echo "extension=imagick.so" > /usr/local/etc/php/conf.d/zz-imagick.ini && \
     
-    printf "[Date]\ndate.timezone = \"${APP_DATETIME}\"" > /usr/local/etc/php/conf.d/zz-pc-timezone.ini && \
+    printf "[Date]\ndate.timezone = \"${APP_DATETIME}\"" > /usr/local/etc/php/conf.d/zz-timezone.ini && \
     
-    echo "opcache.fast_shutdown = 0" > /usr/local/etc/php/conf.d/zz-pc-opcache.ini && \
-    echo "opcache.enable_cli = 0" >> /usr/local/etc/php/conf.d/zz-pc-opcache.ini && \
+    echo "opcache.fast_shutdown = 0" > /usr/local/etc/php/conf.d/zz-opcache.ini && \
+    echo "opcache.enable_cli = 0" >> /usr/local/etc/php/conf.d/zz-opcache.ini && \
     
-    echo "upload_max_filesize = ${APP_POST_SIZE}" > /usr/local/etc/php/conf.d/zz-pc-limit.ini && \
-    echo "post_max_size = ${APP_POST_SIZE}" >> /usr/local/etc/php/conf.d/zz-pc-limit.ini && \
-    echo "memory_limit = ${APP_MEMORY_LIMIT}" >> /usr/local/etc/php/conf.d/zz-pc-limit.ini && \
-    echo "max_execution_time = ${APP_MAX_EXECUTION_TIME}" >> /usr/local/etc/php/conf.d/zz-pc-limit.ini && \
+    echo "upload_max_filesize = ${APP_POST_SIZE}" > /usr/local/etc/php/conf.d/zz-limit.ini && \
+    echo "post_max_size = ${APP_POST_SIZE}" >> /usr/local/etc/php/conf.d/zz-limit.ini && \
+    echo "memory_limit = ${APP_MEMORY_LIMIT}" >> /usr/local/etc/php/conf.d/zz-limit.ini && \
+    echo "max_execution_time = ${APP_MAX_EXECUTION_TIME}" >> /usr/local/etc/php/conf.d/zz-limit.ini && \
     
-    echo "display_errors = Off" > /usr/local/etc/php/conf.d/zz-pc-errors.ini && \
-    echo "log_errors = on" >> /usr/local/etc/php/conf.d/zz-pc-errors.ini && \
-    echo "error_log = /var/log/php/error.log" >> /usr/local/etc/php/conf.d/zz-pc-errors.ini && \
-    echo "error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT" >> /usr/local/etc/php/conf.d/zz-pc-errors.ini
+    echo "display_errors = Off" > /usr/local/etc/php/conf.d/zz-errors.ini && \
+    echo "log_errors = on" >> /usr/local/etc/php/conf.d/zz-errors.ini && \
+    echo "error_log = /var/log/php/error.log" >> /usr/local/etc/php/conf.d/zz-errors.ini && \
+    echo "error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT" >> /usr/local/etc/php/conf.d/zz-errors.ini
 
 RUN echo "[www]" > /usr/local/etc/php-fpm.d/zz-www.conf && \
     echo "pm = ondemand" > /usr/local/etc/php-fpm.d/zz-www.conf && \
