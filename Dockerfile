@@ -33,7 +33,7 @@ RUN apk add --update --no-cache gmp gmp-dev \
     && docker-php-ext-install gmp
 
 # php-redis
-ENV PHPREDIS_VERSION 3.1.2
+ENV PHPREDIS_VERSION 3.1.6
 
 RUN docker-php-source extract \
     && curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz \
@@ -62,8 +62,12 @@ RUN apk add --update --no-cache autoconf g++ imagemagick-dev libtool make pcre-d
     && apk del autoconf g++ libtool make pcre-dev
 
 # Mongodb
-RUN pecl install mongodb-1.4.1 \
-    && docker-php-ext-enable mongodb
+ENV PHPMONGODB_VERSION 1.4.1
+
+RUN apk add --update --no-cache autoconf g++ make pcre-dev \
+    pecl install mongodb-$PHPMONGODB_VERSION \
+    && docker-php-ext-enable mongodb \
+    && apk del autoconf g++ make pcre-dev
 
 # install bcmath extension
 RUN docker-php-ext-install bcmath
