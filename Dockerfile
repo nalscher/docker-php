@@ -55,6 +55,9 @@ RUN docker-php-source extract \
 # git client
 RUN apk add --update --no-cache git
 
+# shadow
+RUN apk add --update --no-cache shadow
+
 # imagick
 RUN apk add --update --no-cache autoconf g++ imagemagick-dev libtool make pcre-dev \
     && pecl install imagick \
