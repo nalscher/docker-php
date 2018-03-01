@@ -9,10 +9,13 @@ ENV APP_MEMORY_LIMIT 256M
 ENV APP_MAX_EXECUTION_TIME 120
 ENV APP_ENV development
 
+# bash
+RUN apk add --update --no-cache bash
+
 # install extensions
-# intl, zip, soap, bash
+# intl, zip, soap
 RUN apk add --update --no-cache libintl icu icu-dev libxml2-dev \
-    && docker-php-ext-install intl zip soap bash
+    && docker-php-ext-install intl zip soap
 
 # mysqli, pdo, pdo_mysql, pdo_pgsql
 RUN apk add --update --no-cache postgresql-dev \
