@@ -10,9 +10,9 @@ ENV APP_MAX_EXECUTION_TIME 120
 ENV APP_ENV development
 
 # install extensions
-# intl, zip, soap
+# intl, zip, soap, bash
 RUN apk add --update --no-cache libintl icu icu-dev libxml2-dev \
-    && docker-php-ext-install intl zip soap
+    && docker-php-ext-install intl zip soap bash
 
 # mysqli, pdo, pdo_mysql, pdo_pgsql
 RUN apk add --update --no-cache postgresql-dev \
