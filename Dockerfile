@@ -13,9 +13,9 @@ ENV APP_ENV development
 RUN apk add --update --no-cache bash
 
 # install extensions
-# intl, zip, soap
+# intl, zip, soap, exif
 RUN apk add --update --no-cache libintl icu icu-dev libxml2-dev \
-    && docker-php-ext-install intl zip soap
+    && docker-php-ext-install intl zip soap exif
 
 # mysqli, pdo, pdo_mysql, pdo_pgsql
 RUN apk add --update --no-cache postgresql-dev \
@@ -36,7 +36,7 @@ RUN apk add --update --no-cache gmp gmp-dev \
     && docker-php-ext-install gmp
 
 # php-redis
-ENV PHPREDIS_VERSION 3.1.6
+ENV PHPREDIS_VERSION 4.1.1
 
 RUN docker-php-source extract \
     && curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz \
@@ -65,7 +65,7 @@ RUN apk add --update --no-cache autoconf g++ imagemagick-dev libtool make pcre-d
     && apk del autoconf g++ libtool make pcre-dev
 
 # Mongodb
-ENV PHPMONGODB_VERSION 1.4.1
+ENV PHPMONGODB_VERSION 1.5.2
 
 RUN apk add --update --no-cache autoconf g++ make pcre-dev \
     && pecl install mongodb-$PHPMONGODB_VERSION \
